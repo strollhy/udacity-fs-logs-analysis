@@ -6,33 +6,38 @@
 import psycopg2
 
 
-def connect():
+def connect(database_name="news"):
     """Connect to the PostgreSQL database.  Returns a database connection."""
-    return psycopg2.connect("dbname=news")
+    try:
+        db = psycopg2.connect("dbname={}".format(database_name))
+        cursor = db.cursor()
+        return db, cursor
+    except:
+        print("Failed to connect the database.")
 
 
 def getPopularArticles():
     """Return the most popular 3 articles"""
-    db = connect()
-    db_cursor = db.cursor()
+    db, cursor = connect()
+
     query = "SELECT * FROM popular_articles;"
-    db_cursor.execute(query)
-    results = db_cursor.fetchmany(3)
+    cursor.execute(query)
+    results = cursor.fetchmany(3)
     db.close()
     if results:
-        return results
+        return ["'{0[0]}' - {0[1]} views".format(r) for r in results]
 
 
 def getPopularAuthors():
     """Return the most popular authors"""
-    db = connect()
-    db_cursor = db.cursor()
+    db, cursor = connect()
+
     query = "SELECT * FROM popular_authors;"
-    db_cursor.execute(query)
-    results = db_cursor.fetchall()
+    cursor.execute(query)
+    results = cursor.fetchall()
     db.close()
     if results:
-        return results
+        return ["{0[0]} - {0[1]} views".format(r) for r in results]
 
 
 def getErrorRate(rate):
@@ -41,11 +46,11 @@ def getErrorRate(rate):
     Args:
       rate: the error rate bar
     """
-    db = connect()
-    db_cursor = db.cursor()
+    db, cursor = connect()
+
     query = "SELECT * FROM error_rates WHERE error_rate > %s;" % rate
-    db_cursor.execute(query)
-    results = db_cursor.fetchall()
+    cursor.execute(query)
+    results = cursor.fetchall()
     db.close()
     if results:
-        return results
+        return ["{0[0]:%m,%d,%Y} - {0[1]:.2f}% errors".format(r) for r in results]

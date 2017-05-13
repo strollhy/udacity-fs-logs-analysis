@@ -30,9 +30,9 @@ $ psql
 ```python
 >>> from logs import *
 >>> getPopularArticles()
-[('Candidate is jerk, alleges rival', 338647L), ('Bears love berries, alleges bear', 253801L), ('Bad things gone, say good people', 170098L)]
+["'Candidate is jerk, alleges rival' - 338647 views", "'Bears love berries, alleges bear' - 253801 views", "'Bad things gone, say good people' - 170098 views"]
 >>> getPopularAuthors()
-[('Ursula La Multa', 507594L), ('Rudolf von Treppenwitz', 423457L), ('Anonymous Contributor', 170098L), ('Markoff Chaney', 84557L)]
+['Ursula La Multa - 507594 views', 'Rudolf von Treppenwitz - 423457 views', 'Anonymous Contributor - 170098 views', 'Markoff Chaney - 84557 views']
 >>> getErrorRate(1)
-[(datetime.date(2016, 7, 17), Decimal('2.2626862468027260'))]
+['07,17,2016 - 2.26% errors']
 ```
