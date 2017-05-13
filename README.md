@@ -22,13 +22,17 @@ $ psql
 > \c news;
 > \i newsdata.sql
 > \i logs.sql
+> \q
 ```
 
-To run the code:  
-```
-python
->> from logs import *
->> getPopularArticles() # It returns three most popular articles with (name, views)
->> getPopularAuthors()  # It returns a list of the most popular authers (name, views)
->> getErrorRate(<rate>) # It returns a list of days which error rate is higher than the bar (date, rate)
+
+## Example of output:
+```python
+>>> from logs import *
+>>> getPopularArticles()
+[('Candidate is jerk, alleges rival', 338647L), ('Bears love berries, alleges bear', 253801L), ('Bad things gone, say good people', 170098L)]
+>>> getPopularAuthors()
+[('Ursula La Multa', 507594L), ('Rudolf von Treppenwitz', 423457L), ('Anonymous Contributor', 170098L), ('Markoff Chaney', 84557L)]
+>>> getErrorRate(1)
+[(datetime.date(2016, 7, 17), Decimal('2.2626862468027260'))]
 ```
